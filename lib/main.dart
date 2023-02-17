@@ -6,13 +6,23 @@ import 'package:flutter/material.dart';
 
 void main() => {runApp(MyApp())};
 
-class MyApp extends StatelessWidget {
-  MyApp({super.key});
+class MyApp extends StatefulWidget {
+  // MyApp({super.key});
+  @override
+  State<StatefulWidget> createState() {
+    return MyAppState();
+  }
+}
 
+class MyAppState extends State<MyApp> {
   final questions = const ['How old are you?', 'What\'s your favourite color?'];
   var questionIndex = 0;
   void answerQuestion() {
-    questionIndex += 1;
+    setState(() {
+
+      questionIndex += 1;
+      },
+    );
     print(questionIndex);
   }
 
