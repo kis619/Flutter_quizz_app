@@ -21,25 +21,46 @@ class _MyAppState extends State<MyApp> {
   final _questions = const [
     {
       'question': 'How old are you?',
-      'answers': ['42', '69'],
+      'answers': [
+        {'text': '42', 'score': 5},
+        {'text': '69', 'score': 10}
+      ],
     },
     {
       'question': 'What\'s your favourite color?',
-      'answers': ['purple', 'orange', 'mellow', 'yellow'],
+      'answers': [
+        {'text': 'purple', 'score': 10},
+        {'text': 'orange', 'score': 7},
+        {'text': 'mellow', 'score': 4},
+        {'text': 'yellow', 'score': 1}
+      ],
     },
     {
       'question': 'Where should I go?',
-      'answers': ['BG', 'DE', 'HE', 'relax'],
+      'answers': [
+        {'text': 'BG', 'score': 10},
+        {'text': 'DE', 'score': 7},
+        {'text': 'HE', 'score': 4},
+        {'text': 'relax', 'score': 1}
+      ],
     },
   ];
   var _questionIndex = 0;
-  void _answerQuestion() {
-    setState(
-      () {
-        _questionIndex += 1;
-      },
-    );
+  var _totalScore = 0;
+
+  void _answerQuestion(int score) {
+    _totalScore += score;
+    setState(() {
+      _questionIndex += 1;
+    });
     print(_questionIndex);
+  }
+
+  void _resetQuiz() {
+    setState(() {
+      _questionIndex = 0;
+      _totalScore = 0;
+    });
   }
 
   @override
@@ -54,7 +75,10 @@ class _MyAppState extends State<MyApp> {
                 questions: _questions,
                 questionIndex: _questionIndex,
                 answerQuestion: _answerQuestion)
-            : const Result(),
+            : Result(
+                score: _totalScore,
+                resetQuiz: _resetQuiz,
+              ),
       ),
     );
   }
