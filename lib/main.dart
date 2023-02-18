@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:guide_basics/answer.dart';
+import 'package:guide_basics/result.dart';
 
-import './listAnswers.dart';
-import './question.dart';
+import './quiz.dart';
 
 // void main() {
 //   runApp(MyApp());
@@ -19,7 +18,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final questions = const [
+  final _questions = const [
     {
       'question': 'How old are you?',
       'answers': ['42', '69'],
@@ -50,20 +49,12 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: const Text('My first amazing flutter app'),
         ),
-        body: Column(
-          children: [
-            Question(
-                questionText: questions[_questionIndex]['question'].toString()),
-            ...(questions[_questionIndex]['answers'] as List<String>)
-                .map((answer) {
-              return Answer(answerText: answer, selectHandler: _answerQuestion);
-            }).toList(),
-            // ListAnswers(
-            // answerQuestion: _answerQuestion,
-            // answers: questions[_questionIndex]['answers'],
-            // ),
-          ],
-        ),
+        body: _questionIndex < _questions.length
+            ? Quiz(
+                questions: _questions,
+                questionIndex: _questionIndex,
+                answerQuestion: _answerQuestion)
+            : const Result(),
       ),
     );
   }
